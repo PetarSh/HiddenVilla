@@ -47,12 +47,14 @@ namespace Business.Repository
             return 0;
         }
 
-        public async Task<IEnumerable<HotelRoomDTO>> GetAllHotelRooms()
+        public async Task<IEnumerable<HotelRoomDTO>> GetAllHotelRooms(string checkInDateStr, string checkOutDatestr)
         {
             try
             {
                 IEnumerable<HotelRoomDTO> hotelRoomDTOs = map.Map<IEnumerable<HotelRoom>,IEnumerable<HotelRoomDTO>>
                     ( db.HotelRooms.Include(x => x.HotelRoomImages));
+
+
                 return hotelRoomDTOs;
             }
             catch(Exception ex)
@@ -62,7 +64,7 @@ namespace Business.Repository
         }
 
 
-        public async Task<HotelRoomDTO> GetHotelRoom(int roomId)
+        public async Task<HotelRoomDTO> GetHotelRoom(int roomId, string checkInDateStr, string checkOutDatestr)
         {
             try
             {
