@@ -36,8 +36,14 @@
 
             <div class="col-8 col-md-2">
                 <div class="form-group" style="margin-top: 1.9rem !important;">
-
-                    <input type="submit" value="Update" class="btn btn-success btn-block form-control" />
+                    @if (IsProcessing)
+                    {
+                        <button class="btn btn-success btn-block form-control"><i class="fa fa-spin fa-spinner"></i>Processing...</button>
+                    }
+                    else
+                    {
+                        <input type="submit" value="Update" class="btn btn-success btn-block form-control" />
+                    }
 
                 </div>
             </div>

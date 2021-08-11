@@ -1,4 +1,5 @@
 ﻿using DataAcesss.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Data
 {
-    public class AplicationDBContext : IdentityDbContext<ApplicationUser>
+    public class AplicationDBContext : IdentityDbContext<IdentityUser>
     {
         public AplicationDBContext(DbContextOptions<AplicationDBContext> options) : base(options)
         {
@@ -20,5 +21,7 @@ namespace DataAccess.Data
         public DbSet<HotelRoomImage> HotelRoomImages { get; set; }
 
         public DbSet<HotelAmenity> HotelAmenities { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
     }
 }
