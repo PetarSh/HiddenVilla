@@ -4,6 +4,7 @@
 
 @inject IHotelRoomService hotelRoomService
 @inject IRoomOrderDetailsService roomOrderDetailsService
+@inject IStripePaymentService stripePaymentService
 
 @if (HotelBooking?.OrderDetails?.HotelRoomDTO?.HotelRoomImages == null)
 {
@@ -234,31 +235,31 @@ else
             return;
         }
 
-        //try
-        //{
-        //    var paymentDTO = new StripePaymentDTO()
-        //    {
-        //        Amount = Convert.ToInt32(HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount * 100),
-        //        ProductName = HotelBooking.OrderDetails.HotelRoomDTO.Name,
-        //        ReturnUrl = "/hotel/room-details/" + Id
-        //    };
+        try
+        {
+            var paymentDTO = new StripePaymentDTO()
+            {
+                Amount = Convert.ToInt32(HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount * 100),
+                ProductName = HotelBooking.OrderDetails.HotelRoomDTO.Name,
+                ReturnUrl = "/hotel/room-details/" + Id
+            };
 
-        //    var result = await stripePaymentService.CheckOut(paymentDTO);
+            var result = await stripePaymentService.CheckOut(paymentDTO);
 
-        //    HotelBooking.OrderDetails.StripeSessionId = result.Data.ToString();
-        //    HotelBooking.OrderDetails.RoomId = HotelBooking.OrderDetails.HotelRoomDTO.Id;
-        //    HotelBooking.OrderDetails.TotalCost = HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount;
+            HotelBooking.OrderDetails.StripeSessionId = result.Data.ToString();
+            HotelBooking.OrderDetails.RoomId = HotelBooking.OrderDetails.HotelRoomDTO.Id;
+            HotelBooking.OrderDetails.TotalCost = HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount;
 
-        //    var roomOrderDetailsSaved = await roomOrderDetailsService.SaveRoomOrderDetails(HotelBooking.OrderDetails);
+            var roomOrderDetailsSaved = await roomOrderDetailsService.SaveRoomOrderDetails(HotelBooking.OrderDetails);
 
-        //    await localStorage.SetItemAsync(SD.Local_RoomOrderDetails, roomOrderDetailsSaved);
+            await localStorage.SetItemAsync(SD.Local_RoomOrderDetails, roomOrderDetailsSaved);
 
-        //    await jsRuntime.InvokeVoidAsync("redirectToCheckout", result.Data.ToString());
-        //}
-        //catch (Exception e)
-        //{
-        //    await jsRuntime.ToastrError(e.Message);
-        //}
+            await jsRuntime.InvokeVoidAsync("redirectToCheckout", result.Data.ToString());
+        }
+        catch (Exception e)
+        {
+            await jsRuntime.ToastrError(e.Message);
+        }
 
     }
 
