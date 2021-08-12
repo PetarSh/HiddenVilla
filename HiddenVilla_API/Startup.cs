@@ -75,8 +75,9 @@ namespace HiddenVilla_API
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IHotelRoomRepository, HotelRoomRepository>();
-            services.AddScoped<IHotelImagesRepository, HotelImagesRepository>();
             services.AddScoped<IAmenitiyRepository, AmenityRepository>();
+            services.AddScoped<IRoomOrderDetailsRepository, RoomOrderDetailsRepository>();
+            services.AddScoped<IHotelImagesRepository, HotelImagesRepository>();
 
             services.AddCors(o => o.AddPolicy("HiddenVilla", builder =>
             {
