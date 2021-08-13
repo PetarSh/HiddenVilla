@@ -22,6 +22,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using Stripe;
 
 namespace HiddenVilla_API
 {
@@ -124,6 +125,7 @@ namespace HiddenVilla_API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["ApiKey"];
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
