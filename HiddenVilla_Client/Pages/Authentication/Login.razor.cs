@@ -11,7 +11,7 @@ namespace HiddenVilla_Client.Pages.Authentication
 {
     public partial class Login
     {
-        private AuthenticationDTO userForAuthentication = new AuthenticationDTO();
+        private AuthenticationDTO UserForAuthentication = new AuthenticationDTO();
         public bool IsProcessing { get; set; } = false;
         public bool ShowAuthenticationErrors { get; set; }
         public string Errors { get; set; }

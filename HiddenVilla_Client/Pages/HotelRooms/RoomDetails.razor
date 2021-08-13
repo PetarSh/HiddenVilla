@@ -5,6 +5,8 @@
 @inject IHotelRoomService hotelRoomService
 @inject IRoomOrderDetailsService roomOrderDetailsService
 @inject IStripePaymentService stripePaymentService
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = SD.Role_Customer)]
 
 @if (HotelBooking?.OrderDetails?.HotelRoomDTO?.HotelRoomImages == null)
 {
@@ -198,16 +200,16 @@ else
                 }
             }
 
-            //if (await localStorage.GetItemAsync<UserDTO>
-            //    (SD.Local_UserDetails) != null)
-            //{
-            //    var userInfo = await localStorage.GetItemAsync<UserDTO>
-            //        (SD.Local_UserDetails);
-            //    HotelBooking.OrderDetails.UserId = userInfo.Id;
-            //    HotelBooking.OrderDetails.Name = userInfo.Name;
-            //    HotelBooking.OrderDetails.Email = userInfo.Email;
-            //    HotelBooking.OrderDetails.Phone = userInfo.PhoneNo;
-            //}
+            if (await localStorage.GetItemAsync<UserDTO>
+                (SD.Local_UserDetails) != null)
+            {
+                var userInfo = await localStorage.GetItemAsync<UserDTO>
+                    (SD.Local_UserDetails);
+                HotelBooking.OrderDetails.UserId = userInfo.Id;
+                HotelBooking.OrderDetails.Name = userInfo.Name;
+                HotelBooking.OrderDetails.Email = userInfo.Email;
+                HotelBooking.OrderDetails.Phone = userInfo.PhoneNo;
+            }
         }
         catch (Exception ex)
         {
