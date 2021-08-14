@@ -3,26 +3,21 @@ using Business.Repository;
 using DataAccess.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
 using HiddenVilla_API.Helper;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Stripe;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using HiddenVilla_Api.Helper;
 
 namespace HiddenVilla_API
 {
@@ -47,6 +42,8 @@ namespace HiddenVilla_API
             var appSettingsSection = Configuration.GetSection("APISettings");
             services.Configure<APISettings>(appSettingsSection);
 
+            services.Configure<MailJetSettings>(Configuration.GetSection("MailJetSettings"));
+          
             var apiSettings = appSettingsSection.Get<APISettings>();
             var key = Encoding.ASCII.GetBytes(apiSettings.SecretKey);
 
@@ -79,6 +76,7 @@ namespace HiddenVilla_API
             services.AddScoped<IAmenitiyRepository, AmenityRepository>();
             services.AddScoped<IRoomOrderDetailsRepository, RoomOrderDetailsRepository>();
             services.AddScoped<IHotelImagesRepository, HotelImagesRepository>();
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddCors(o => o.AddPolicy("HiddenVilla", builder =>
             {
